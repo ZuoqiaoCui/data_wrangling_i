@@ -3,4 +3,15 @@ title: "data import"
 output: github_document
 ---
 
-ˆ
+## data import: CSVs
+
+
+```{r}
+library(tidyverse)
+```
+
+let's import data using the 'readr' package
+```{r}
+read_csv()
+```
+
