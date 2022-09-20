@@ -8,10 +8,79 @@ output: github_document
 
 ```{r}
 library(tidyverse)
+library(readxl)
+library(haven)
 ```
 
 let's import data using the 'readr' package
+1. write the right path to find the data (relative path)
+2. package name :: function name
 ```{r}
-read_csv()
+litters_df = read_csv("data/FAS_litters.csv")
+litters_df = janitor::clean_names(litters_df)
+```
+look at the data
+```{r}
+litters_df
+
+head(litters_df)
+tail(litters_df)
 ```
 
+```{r,eval=false}
+view(litters_df)
+```
+
+```{r}
+skimr::skim(litters_df)
+```
+
+read_csv options
+```{r, eval = false}
+read_csv("data/FAS_litters.csv",na = c("","NA",999,88),skip = 2)
+```
+
+## Other file formats
+we need to read in an excel spreadsheet
+
+```{r}
+mlb_df = read_excel("data/mlb11.xlsx")
+```
+
+```{r}
+lotr_words_df=
+  read_excel(
+    "data/lotR_Words.xlsx",
+    range='B3:D6'
+  )
+```
+
+## Still more formats
+
+read in a sas dataset
+
+```{r}
+pulse_df = read_sas("data/public_pulse_data.sas7bdat")
+```
+
+
+## Data export
+
+```{r}
+write_csv(litters_df, file="result/lotr_words_df.csv")
+```
+
+## why not base r
+
+```{r}
+dont_do_this_df=read_csv("FAS/")
+
+```
+
+
+
+
+
+
+
+ 
