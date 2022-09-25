@@ -27,7 +27,7 @@ head(litters_df)
 tail(litters_df)
 ```
 
-```{r,eval=false}
+```{r}
 view(litters_df)
 ```
 
@@ -36,7 +36,7 @@ skimr::skim(litters_df)
 ```
 
 read_csv options
-```{r, eval = false}
+```{r}
 read_csv("data/FAS_litters.csv",na = c("","NA",999,88),skip = 2)
 ```
 
@@ -73,9 +73,44 @@ write_csv(litters_df, file="result/lotr_words_df.csv")
 ## why not base r
 
 ```{r}
-dont_do_this_df=read_csv("FAS/")
+options(tibble.print_min = 3)
 
+litters_data = read_csv("data/FAS_litters.csv",
+  col_types = "ccddiiii")
+litters_data = janitor::clean_names(litters_data)
+
+pups_data = read_csv("./data/FAS_pups.csv",
+  col_types = "ciiiii")
+pups_data = janitor::clean_names(pups_data)
 ```
+```{r}
+select(litters_data, group, litter_number, gd0_weight, pups_born_alive)
+```
+
+```{r}
+select(litters_data, group:gd_of_birth)
+```
+
+```{r}
+select(litters_data, starts_with("gd"))
+select(litters_data, ends_with("weight"))
+```
+## 前两列放前面，其他的放后面用everything(),没有everything就只选择被select的两列
+```{r}
+select(litters_data,litter_number,pups_survive, everything())
+```
+
+```{r}
+mutate(litters_data,
+  wt_gain = gd18_weight - gd0_weight,
+  group = str_to_lower(group)
+)
+```
+
+
+
+
+
 
 
 
