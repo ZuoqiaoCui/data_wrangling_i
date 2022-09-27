@@ -5,6 +5,7 @@ date: "2022-09-26"
 ---
 ```{r}
 library(tidyverse)
+options(tibble.print_min = 5)
 ```
 
 ## `pivot_longer`
@@ -42,6 +43,38 @@ pivot_longer(
   relocate(id,visit) %>%
   mutate(visit = recode(visit,"bl"="00m")) ##update
 ```
+
+
+## 'pivot_wider'
+Make up some data
+```{r}
+analysis_result=
+  tibble(
+    group = c("treatment","treatment","placebo", "placebo"),
+    time = c("pre","post","pre","post"),
+    mean = c(4,8,3.5,4)
+  )
+analysis_result %>%
+  pivot_wider(
+    names_from = "time",
+    values_from = "mean"
+  )
+```
+## Binding rows
+Using the lotR data
+First step: import each table
+```{r}
+fellow_ring =
+  readxl::read_excel("./data/lotR_Words.xlsx",range = "B3:D6") %>%
+  mutate(movie = "fellow_ring")
+two_towers =
+ readxl::read_excel("./data/lotR_Words.xlsx",range = "F3:H6") %>%
+  mutate(movie = "two_towers")
+return_ring =
+ readxl::read_excel("./data/lotR_Words.xlsx",range = "J3:L6") %>%
+  mutate(movie = "return_ring")
+```
+
 
 
 

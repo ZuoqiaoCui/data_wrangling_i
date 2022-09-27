@@ -377,6 +377,7 @@ pre code {
 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()</code></pre>
+<pre class="r"><code>options(tibble.print_min = 5)</code></pre>
 <div id="pivot_longer" class="section level2">
 <h2><code>pivot_longer</code></h2>
 <p>Load the PULSE data</p>
@@ -404,6 +405,39 @@ pivot_longer(
 ) %&gt;% 
   relocate(id,visit) %&gt;%
   mutate(visit = recode(visit,&quot;bl&quot;=&quot;00m&quot;)) ##update</code></pre>
+</div>
+<div id="pivot_wider" class="section level2">
+<h2>‘pivot_wider’</h2>
+<p>Make up some data</p>
+<pre class="r"><code>analysis_result=
+  tibble(
+    group = c(&quot;treatment&quot;,&quot;treatment&quot;,&quot;placebo&quot;, &quot;placebo&quot;),
+    time = c(&quot;pre&quot;,&quot;post&quot;,&quot;pre&quot;,&quot;post&quot;),
+    mean = c(4,8,3.5,4)
+  )
+analysis_result %&gt;%
+  pivot_wider(
+    names_from = &quot;time&quot;,
+    values_from = &quot;mean&quot;
+  )</code></pre>
+<pre><code>## # A tibble: 2 × 3
+##   group       pre  post
+##   &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt;
+## 1 treatment   4       8
+## 2 placebo     3.5     4</code></pre>
+</div>
+<div id="binding-rows" class="section level2">
+<h2>Binding rows</h2>
+<p>Using the lotR data First step: import each table</p>
+<pre class="r"><code>fellow_ring =
+  readxl::read_excel(&quot;./data/lotR_Words.xlsx&quot;,range = &quot;B3:D6&quot;) %&gt;%
+  mutate(movie = &quot;fellow_ring&quot;)
+two_towers =
+ readxl::read_excel(&quot;./data/lotR_Words.xlsx&quot;,range = &quot;F3:H6&quot;) %&gt;%
+  mutate(movie = &quot;two_towers&quot;)
+return_ring =
+ readxl::read_excel(&quot;./data/lotR_Words.xlsx&quot;,range = &quot;J3:L6&quot;) %&gt;%
+  mutate(movie = &quot;return_ring&quot;)</code></pre>
 </div>
 
 
